@@ -1,3 +1,4 @@
+'''Handles reading in input data file and hyper-param json file'''
 import os
 import json
 import numpy as np
