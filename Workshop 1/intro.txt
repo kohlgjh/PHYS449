@@ -1,1 +1,6 @@
 Alev Orfi - alev.orfi@uwaterloo.ca
+
+Inputs:
+    a value
+    path to data
+    path to results
