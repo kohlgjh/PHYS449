@@ -1,6 +1,7 @@
 import argparse
 import numpy as np
 from src.extractData import get_hyperparameters, get_input_data
+from src.linearRegression import LinearRegressionModel
 
 def parse_args():
     '''Parses command line args for input path and json path'''
@@ -17,6 +18,9 @@ def main(args):
     # extract data and hyperparameters from passed files
     learning_rate, num_iter = get_hyperparameters(args)
     data_array = get_input_data(args)
+
+    lgModel = LinearRegressionModel(data_array)
+
 
 
 if __name__ == '__main__':
