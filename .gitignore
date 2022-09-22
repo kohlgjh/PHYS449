@@ -1,3 +1,4 @@
 *.sublime-project
 *.sublime-workspace
 .venv
+*.__pychache__/
