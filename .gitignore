@@ -1,6 +1,5 @@
 *.sublime-project
 *.sublime-workspace
+__pycache__/
 .venv
-*__pychache__/
-__pychache__/
-__pychache__
+.ipynb_checkpoints
