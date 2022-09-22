@@ -1,7 +1,11 @@
 import argparse
 import numpy as np
+import os
+
 from src.extractData import get_hyperparameters, get_input_data
 from src.linearRegression import LinearRegressionModel
+from src.gradientDescent import GradientDescentModel
+from src.exportData import export
 
 def parse_args():
     '''Parses command line args for input path and json path'''
@@ -20,6 +24,10 @@ def main(args):
     data_array = get_input_data(args)
 
     lgModel = LinearRegressionModel(data_array)
+    gdModel = GradientDescentModel(data_array, learning_rate, num_iter)
+
+    out_path = os.path.join(os.getcwd(), str(args.json_path).split('/')[-1].split('.')[0] + '.out')
+    export(out_path, lgModel.w_star, gdModel.w_star)
 
 
 
