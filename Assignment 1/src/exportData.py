@@ -28,4 +28,4 @@ def export(path:os.path, w_analytic:np.ndarray, w_gd:np.ndarray)->None:
             save_file.write(f'{w_analytic_i[0]:.4f}\n')
         save_file.write('\n')
         for w_gd_i in w_gd:
-            save_file.write(f'{w_gd_i:.4f}\n')
+            save_file.write(f'{w_gd_i[0]:.4f}\n')

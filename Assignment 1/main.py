@@ -23,9 +23,11 @@ def main(args):
     learning_rate, num_iter = get_hyperparameters(args)
     data_array = get_input_data(args)
 
+    # the two models
     lgModel = LinearRegressionModel(data_array)
     gdModel = GradientDescentModel(data_array, learning_rate, num_iter)
 
+    # export results
     out_path = os.path.join(os.getcwd(), str(args.json_path).split('/')[-1].split('.')[0] + '.out')
     export(out_path, lgModel.w_star, gdModel.w_star)
 
