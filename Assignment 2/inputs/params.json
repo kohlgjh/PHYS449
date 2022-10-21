@@ -1,0 +1,6 @@
+{
+    "verbose":true,
+    "num_epochs":2000,
+    "display_epochs":100,
+    "learning_rate":0.003
+}

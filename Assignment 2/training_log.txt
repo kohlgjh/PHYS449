@@ -1,0 +1,21 @@
+
+Epoch [100/2000]	 Training Loss: 0.1717  Training Accuracy: 94.8% 	 Test Loss: 0.1560  Test Accuracy: 95.3%
+Epoch [200/2000]	 Training Loss: 0.1206  Training Accuracy: 96.4% 	 Test Loss: 0.1165  Test Accuracy: 96.3%
+Epoch [300/2000]	 Training Loss: 0.0975  Training Accuracy: 97.2% 	 Test Loss: 0.1003  Test Accuracy: 96.8%
+Epoch [400/2000]	 Training Loss: 0.0829  Training Accuracy: 97.6% 	 Test Loss: 0.0906  Test Accuracy: 97.2%
+Epoch [500/2000]	 Training Loss: 0.0724  Training Accuracy: 97.8% 	 Test Loss: 0.0842  Test Accuracy: 97.4%
+Epoch [600/2000]	 Training Loss: 0.0643  Training Accuracy: 98.0% 	 Test Loss: 0.0796  Test Accuracy: 97.5%
+Epoch [700/2000]	 Training Loss: 0.0576  Training Accuracy: 98.2% 	 Test Loss: 0.0759  Test Accuracy: 97.7%
+Epoch [800/2000]	 Training Loss: 0.0520  Training Accuracy: 98.4% 	 Test Loss: 0.0729  Test Accuracy: 97.8%
+Epoch [900/2000]	 Training Loss: 0.0472  Training Accuracy: 98.6% 	 Test Loss: 0.0704  Test Accuracy: 98.0%
+Epoch [1000/2000]	 Training Loss: 0.0430  Training Accuracy: 98.7% 	 Test Loss: 0.0684  Test Accuracy: 98.1%
+Epoch [1100/2000]	 Training Loss: 0.0394  Training Accuracy: 98.8% 	 Test Loss: 0.0668  Test Accuracy: 98.1%
+Epoch [1200/2000]	 Training Loss: 0.0361  Training Accuracy: 99.0% 	 Test Loss: 0.0655  Test Accuracy: 98.1%
+Epoch [1300/2000]	 Training Loss: 0.0333  Training Accuracy: 99.1% 	 Test Loss: 0.0644  Test Accuracy: 98.1%
+Epoch [1400/2000]	 Training Loss: 0.0307  Training Accuracy: 99.2% 	 Test Loss: 0.0634  Test Accuracy: 98.2%
+Epoch [1500/2000]	 Training Loss: 0.0284  Training Accuracy: 99.2% 	 Test Loss: 0.0626  Test Accuracy: 98.2%
+Epoch [1600/2000]	 Training Loss: 0.0263  Training Accuracy: 99.3% 	 Test Loss: 0.0620  Test Accuracy: 98.2%
+Epoch [1700/2000]	 Training Loss: 0.0244  Training Accuracy: 99.4% 	 Test Loss: 0.0614  Test Accuracy: 98.2%
+Epoch [1800/2000]	 Training Loss: 0.0226  Training Accuracy: 99.4% 	 Test Loss: 0.0610  Test Accuracy: 98.2%
+Epoch [1900/2000]	 Training Loss: 0.0210  Training Accuracy: 99.5% 	 Test Loss: 0.0606  Test Accuracy: 98.3%
+Epoch [2000/2000]	 Training Loss: 0.0196  Training Accuracy: 99.5% 	 Test Loss: 0.0603  Test Accuracy: 98.3%
