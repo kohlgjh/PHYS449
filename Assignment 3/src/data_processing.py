@@ -8,10 +8,18 @@ def interlace(in1:np.ndarray, in2:np.ndarray) -> np.ndarray:
     Interlaces in1 and in2
     
     Example: 
-    in1 = [0 1 0 0 1 0 1 0]
-    in2 = [1 1 0 0 1 0 0 1]
-    returns: [0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 1]
+    in1 = [[0 1 0 0 1 0 1 0], ...]
+    in2 = [[1 1 0 0 1 0 0 1], ...]
+    returns: [[0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 1], ...]
     '''
+    laced = np.empty((in1.shape[0], in1.shape[1]*2), dtype=int)
+
+    for i in range(in1.shape[0]):
+        for j in range(in1.shape[1]):
+            laced[i, 2*j] = in1[i,j]
+            laced[i, (2*j)+1] = in2[i,j]
+
+    return laced
 
 def generate_train_test(train_size, test_size, seed) -> np.ndarray:
     '''
@@ -52,3 +60,10 @@ def generate_train_test(train_size, test_size, seed) -> np.ndarray:
         Carr[i] = np.flip(np.array(re.split('', Cstr[i])[1:-1], dtype=int))
     
     return Aarr[0:train_size], Barr[0:train_size], Carr[0:train_size], Aarr[train_size:], Barr[train_size:], Carr[train_size:]
+
+# TESTING
+
+# a,b,c,d,e,f = generate_train_test(100, 10, 12345)
+# print(a[0])
+# print(b[0])
+# print(interlace(a,b)[0])
