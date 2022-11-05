@@ -7,7 +7,8 @@ Note: The last commit to the master branch of your repository before the deadlin
 
 In the folder `data` you will find 3 text files, containing binary representations of numbers A_i, B_i, and C_i= A_i * B_i for each line i. Each A_i and B_i have 8 digits, while C_i has 16.
 
-The binary numbers are encoded in the file in “little endian” format, meaning the least significant digit is on the left. That is, given an integer A, with binary representation A = ...a_2 a_1 a_0, the line in the input file reads a_0 a_1 a_2 ...
+The binary numbers are encoded in the file in “little endian” format, meaning the least significant digit is on the left. 
+That is, given an integer A, with binary representation A = ...a_2 a_1 a_0, the line in the input file reads a_0 a_1 a_2 ...
 
 There are only 10 such examples in the included dataset. Select a few of them and perform the multiplication by hand to understand how it works and why an RNN is a good model for this task.
 
@@ -25,7 +26,8 @@ and get a corresponding one-hotted output
 
 in order to keep the input and output sequences the same length.
 
-You should report the training and test losses periodically during training, and one final time when the training terminates. Given that multiplication is commutative, also compute and display the loss on both the training and test sets that you obtain when you swap inputs A and B.
+You should report the training and test losses periodically during training, and one final time when the training terminates. 
+Given that multiplication is commutative, also compute and display the loss on both the training and test sets that you obtain when you swap inputs A and B.
 
 The command to run your code should be of the format in these examples:
 --------------------------------
