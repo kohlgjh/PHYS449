@@ -8,11 +8,11 @@ def interlace(in1:np.ndarray, in2:np.ndarray) -> np.ndarray:
     Interlaces in1 and in2
     
     Example: 
-    in1 = [[0 1 0 0 1 0 1 0], ...]
-    in2 = [[1 1 0 0 1 0 0 1], ...]
-    returns: [[0 1 1 1 0 0 0 0 1 1 0 0 1 0 0 1], ...]
+    in1 = [[[0 1], [1 0], ...], ...]
+    in2 = [[[1 0], [1 0], ...], ...]
+    returns: [[[0 1], [1 0], [1 0], [1 0]], ...]
     '''
-    laced = np.empty((in1.shape[0], in1.shape[1]*2), dtype=int)
+    laced = np.empty((in1.shape[0], in1.shape[1]*2, 2), dtype=int)
 
     for i in range(in1.shape[0]):
         for j in range(in1.shape[1]):
@@ -23,7 +23,10 @@ def interlace(in1:np.ndarray, in2:np.ndarray) -> np.ndarray:
 
 def generate_train_test(train_size, test_size, seed) -> np.ndarray:
     '''
-    Generates the training and testing data given a random seed
+    Generates the training and testing data given a random seed.
+
+    We use one-hot defintiions of:
+    0 = [0 1], 1 = [1 0]
 
     Returns:
     A_train - 2D array where each row is separated digits of 8-bit binary number
@@ -52,12 +55,17 @@ def generate_train_test(train_size, test_size, seed) -> np.ndarray:
         Cstr[i] = np.binary_repr(C[i], width=16)
 
     # arrays to hold the 0's and 1's that come from splitting the strings of binary-representation
-    Aarr, Barr, Carr = np.empty((len(A),8), dtype=object), np.empty((len(A),8), dtype=object), np.empty((len(A),16), dtype=object)
+    Aarr, Barr, Carr = np.empty((len(A),8,2), dtype=object), np.empty((len(A),8,2), dtype=object), np.empty((len(A),16,2), dtype=object)
 
     for i in range(len(A)):
-        Aarr[i] = np.flip(np.array(re.split('', Astr[i])[1:-1], dtype=int))
-        Barr[i] = np.flip(np.array(re.split('', Bstr[i])[1:-1], dtype=int))
-        Carr[i] = np.flip(np.array(re.split('', Cstr[i])[1:-1], dtype=int))
+        for j, binary in enumerate(np.flip(np.array(re.split('', Astr[i])[1:-1], dtype=int))):
+            Aarr[i, j] = [1, 0] if binary == 1 else [0, 1]
+
+        for j, binary in enumerate(np.flip(np.array(re.split('', Bstr[i])[1:-1], dtype=int))):
+            Barr[i, j] = [1, 0] if binary == 1 else [0, 1]
+
+        for j, binary in enumerate(np.flip(np.array(re.split('', Cstr[i])[1:-1], dtype=int))):
+            Carr[i, j] = [1, 0] if binary == 1 else [0, 1]
     
     return Aarr[0:train_size], Barr[0:train_size], Carr[0:train_size], Aarr[train_size:], Barr[train_size:], Carr[train_size:]
 
