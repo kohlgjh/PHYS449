@@ -2,6 +2,7 @@
 
 import numpy as np
 import re
+import torch
 
 def interlace(in1:np.ndarray, in2:np.ndarray) -> np.ndarray:
     '''
@@ -68,6 +69,32 @@ def generate_train_test(train_size, test_size, seed) -> np.ndarray:
             Carr[i, j] = [1, 0] if binary == 1 else [0, 1]
     
     return Aarr[0:train_size], Barr[0:train_size], Carr[0:train_size], Aarr[train_size:], Barr[train_size:], Carr[train_size:]
+
+def generate_data_loader(train_size, test_size, seed, device, batch_size):
+    '''Returns data loader for training and testing data'''
+
+    # generate training/test data
+    atr,btr,ctr,ate,bte,cte = generate_train_test(train_size, test_size, seed)
+
+    # interlace the a and b arrays
+    abtr, batr = interlace(atr, btr), interlace(btr, atr)
+    abte, bate = interlace(ate, bte), interlace(bte, ate)
+
+    # put them into torch tensors
+    abtr = torch.from_numpy(abtr).type(torch.float).to(device)
+    batr = torch.from_numpy(batr).type(torch.float).to(device)
+    abte = torch.from_numpy(abte).type(torch.float).to(device)
+    bate = torch.from_numpy(bate).type(torch.float).to(device)
+    ctr = torch.from_numpy(ctr.astype(int)).type(torch.float).to(device)
+    cte = torch.from_numpy(cte.astype(int)).type(torch.float).to(device)
+
+    # put torch tensors into data loaders
+    test_set = torch.utils.data.TensorDataset(abte, cte)
+    train_set = torch.utils.data.TensorDataset(abtr, ctr)
+    test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False)
+    train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
+
+    return train_loader, test_loader
 
 # TESTING
 
