@@ -7,7 +7,7 @@ class Net(nn.Module):
     def __init__(self):
         super().__init__()
 
-        self.lstm = nn.LSTM(2, 128, num_layers=2, batch_first=True) # input size is either 2 or 1?
+        self.lstm = nn.LSTM(2, 128, num_layers=2, batch_first=True) # input size is 2 for one-hot
         self.rnn_to_fcl = nn.Linear(128, 32) # hidden layer to 32 
         self.softmax = nn.Softmax(dim=2)
 
