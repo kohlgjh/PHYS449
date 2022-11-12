@@ -14,4 +14,3 @@ def generate_loss_report(obj_vals, cross_vals, params):
     plt.xlabel('Epoch x Batch')
     plt.ylabel('Loss')
     plt.savefig(os.path.join(os.getcwd(),'plots/loss.png'), dpi=150)
-    plt.show()

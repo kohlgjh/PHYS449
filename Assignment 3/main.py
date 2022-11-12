@@ -7,6 +7,7 @@ from src.extract_parameters import get_parameters
 from src.data_processing import generate_data_loader
 from src.train_and_test import train_and_test
 from src.plot import generate_loss_report
+from src.train_and_test import generate_accuracy
 
 def parse_args():
     '''Parses command line input for arguments'''
@@ -24,13 +25,18 @@ def main(args):
     params = get_parameters(args)
 
     # data generation
-    train_loader, test_loader = generate_data_loader(args.train_size, args.test_size, args.seed, args.device, int(params['batch_size']))
+    train_loader, test_loader, reverse_test_loader = generate_data_loader(args.train_size, args.test_size, args.seed,
+                                                                          args.device, int(params['batch_size']))
 
     # train and test
     obj_vals, cross_vals, accuracy = train_and_test(model, train_loader, test_loader, params)
 
     # making plots
     generate_loss_report(obj_vals, cross_vals, accuracy)
+
+    # test model with b * a instead of a * b
+    accuracy_reverse = generate_accuracy(model, reverse_test_loader)
+    print(f"Testing b*a with final model achieves {accuracy_reverse:.1f}% accuracy")
 
 
 if __name__ == '__main__':

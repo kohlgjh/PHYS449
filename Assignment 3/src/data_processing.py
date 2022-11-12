@@ -82,7 +82,6 @@ def generate_data_loader(train_size, test_size, seed, device, batch_size):
 
     # put them into torch tensors
     abtr = torch.from_numpy(abtr).type(torch.float).to(device)
-    batr = torch.from_numpy(batr).type(torch.float).to(device)
     abte = torch.from_numpy(abte).type(torch.float).to(device)
     bate = torch.from_numpy(bate).type(torch.float).to(device)
     ctr = torch.from_numpy(ctr.astype(int)).type(torch.float).to(device)
@@ -94,7 +93,12 @@ def generate_data_loader(train_size, test_size, seed, device, batch_size):
     test_loader = torch.utils.data.DataLoader(test_set, batch_size=batch_size, shuffle=False)
     train_loader = torch.utils.data.DataLoader(train_set, batch_size=batch_size, shuffle=True)
 
-    return train_loader, test_loader
+    # reversed ordered test loader
+    reverse_test_set = torch.utils.data.TensorDataset(bate, cte)
+    reverse_test_loader = torch.utils.data.DataLoader(reverse_test_set, batch_size=batch_size, shuffle=False)
+
+
+    return train_loader, test_loader, reverse_test_loader
 
 # TESTING
 
