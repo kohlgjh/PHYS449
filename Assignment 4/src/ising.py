@@ -19,14 +19,15 @@ class Ising1D():
 
         self.N = N
         self.num_samples = num_samples
+        self.seed = seed
 
         # setup the lattices
-        self.generate_lattices()
+        self.generate_lattices(seed)
         
 
-    def generate_lattices(self) -> np.ndarray:
+    def generate_lattices(self, seed) -> np.ndarray:
         '''Generates num_samples amount of 1D lattices of shape N'''
-        np.random.seed()
+        np.random.seed(seed+1)
         self.lattices = (np.random.randint(0, 2, size=(self.num_samples, self.N)) * 2) - 1
 
     def equilibrium(self, flips_per_site=100):
@@ -81,7 +82,7 @@ class Ising1D():
 
         for epoch in range(num_epochs):
             # generate lattices, go to equilibrium, and average couplers
-            self.generate_lattices()
+            self.generate_lattices(self.seed)
             self.equilibrium(flips_per_site=flips_per_site)
             model_coupler_avg = avg_coupler(self.lattices)
 
