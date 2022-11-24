@@ -5,6 +5,11 @@ from src.coupler import avg_coupler
 class Ising1D():
     '''
     1D Ising model class.
+    Params
+    ---
+    N: size of each 1D lattice
+    num_samples: number of lattices in data file
+    seed: number to seed random generation of weights
     '''
     def __init__(self, N, num_samples, seed=3141):
 
@@ -72,8 +77,9 @@ class Ising1D():
         Trains weights based on data set
         '''
         train_coupler_avg = avg_coupler(train_data)
+        KLs = [] # keep track of KLs
 
-        for epoch in range(num_epochs+1):
+        for epoch in range(num_epochs):
             # generate lattices, go to equilibrium, and average couplers
             self.generate_lattices()
             self.equilibrium(flips_per_site=flips_per_site)
@@ -86,6 +92,10 @@ class Ising1D():
             self.weights[np.where(self.weights > 1)] = 1.
             self.weights[np.where(self.weights < -1)] = -1. 
 
+            # current KL
+            KL = self._KL(train_data)
+            KLs.append(KL)
+
             if verbose:
                 if epoch % 25 == 0:
                     current_weights = {}
@@ -95,7 +105,7 @@ class Ising1D():
                             current_weights[(j, j+1)] = round(self.weights[j], 2)
                         else:
                             current_weights[(j, 0)] = round(self.weights[j], 2)
-                    print(f"Epoch: {epoch}, weights are: {current_weights}\n")
+                    print(f"Epoch: {epoch}, KL = {KL:.2f}, weights are: {current_weights}\n")
 
 
         final_weights = {}
@@ -106,35 +116,36 @@ class Ising1D():
             else:
                 final_weights[(j, 0)] = round(self.weights[j], 2)
 
-        print('Final weights: ', final_weights)
+        print(f'Final KL: {KL:.2f}, final weights: ', final_weights)
+        return KLs
 
-    # def _KL(self, train_data):
-    #     '''
-    #     tracks KL divergence by estimating probability using number of occurences
-    #     divided by total number of lattices
-    #     '''
-    #     # find number of unique instances in data and current lattices
-    #     data_instances = []
-    #     model_instances = []
+    def _KL(self, train_data):
+        '''
+        tracks KL divergence by estimating probability using number of occurences
+        divided by total number of lattices
+        '''
+        # find number of unique instances in data and current lattices
+        data_instances = []
+        model_instances = []
 
-    #     # collect all unique lattices in data
-    #     for i in range(train_data.shape[0]):
-    #         if train_data[i].tolist() not in data_instances:
-    #             data_instances.append(train_data[i].tolist())
+        # collect all unique lattices in data
+        for i in range(train_data.shape[0]):
+            if train_data[i].tolist() not in data_instances:
+                data_instances.append(train_data[i].tolist())
 
-    #     #collect all unique lattices in model
-    #     for i in range(self.lattices.shape[0]):
-    #         if ising.lattices[i].tolist() not in model_instances:
-    #             model_instances.append(ising.lattices[i].tolist())
+        #collect all unique lattices in model
+        for i in range(self.lattices.shape[0]):
+            if self.lattices[i].tolist() not in model_instances:
+                model_instances.append(self.lattices[i].tolist())
 
-    #     # now calcualte KL
-    #     KL = 0
-    #     for instance in data_instances:
-    #         if instance in model_instances:
-    #             p_data = self._p(pm_data, instance)
-    #             p_model = self._p(ising.lattices, instance)
-    #             KL +=  p_data * np.log(p_data/p_model)
-    #     return KL
+        # now calcualte KL
+        KL = 0
+        for instance in data_instances:
+            if instance in model_instances:
+                p_data = self._p(train_data, instance)
+                p_model = self._p(self.lattices, instance)
+                KL +=  p_data * np.log(p_data/p_model)
+        return KL
 
     def _p(self, data, instance):
         '''Estimates probability of configuration based on number of exact instances in dataset'''
